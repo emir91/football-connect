@@ -1,4 +1,5 @@
 import express from 'express';
+import connectDB from './db';
 
 // Create an Express application
 const app = express();
@@ -10,6 +11,13 @@ app.use(express.urlencoded({ extended: true }));
 
 // Start the server
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+
+async function startServer() {
+  await connectDB();
+
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+}
+
+startServer();
